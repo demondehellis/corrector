@@ -29,7 +29,7 @@ cd corrector
 2. Install the required dependencies:
 
 ```bash
-pip install -r requirements.txt
+python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt
 ```
 
 3. Configure environment variables:
@@ -46,19 +46,19 @@ CORRECTOR_MODEL=gpt-4o-mini  # Optional, default model is gpt-4o-mini
 To correct grammar and punctuation in an entire file:
 
 ```bash
-python corrector.py input.txt
+/path/to/corrector/venv/bin/python corrector.py input.txt
 ```
 
 To save the corrected content to a specific file:
 
 ```bash
-python corrector.py input.txt --output output.txt
+/path/to/corrector/venv/bin/python corrector.py input.txt --output output.txt
 ```
 
 To correct specific lines from the input file (e.g., lines 1 to 5) and save the result:
 
 ```bash
-python corrector.py input.txt --lines 1:5 --output output.txt
+/path/to/corrector/venv/bin/python corrector.py input.txt --lines 1:5 --output output.txt
 ```
 
 ## Using as an External Tool in JetBrains IDEs
@@ -69,8 +69,8 @@ To use this script as an external tool, follow these steps:
 2. Click the `+` button to add a new tool.
 3. Fill in the following details:
    - **Name**: Grammar Corrector
-   - **Program**: Path to your Python executable (e.g., `/opt/homebrew/bin/python3.11`).
-   - **Arguments**: `/path/to/corrector.py $FilePath$ --lines $SelectionStartLine$:$SelectionEndLine$`
+   - **Program**: Path to your Python executable (e.g., `/path/to/corrector/venv/bin/python`).
+   - **Arguments**: `/path/to/corrector/corrector.py $FilePath$ --lines $SelectionStartLine$:$SelectionEndLine$`
    - **Working Directory**: `$ProjectFileDir$`
    - Enable `Synchronize files after execution`.
    - (Optional) Check `Open console for tool output` to view the output or any errors.
