@@ -1,6 +1,7 @@
 #!/usr/bin/env .venv/bin/python3
 
 import logging
+import os
 import sys
 
 from dotenv import load_dotenv
@@ -12,6 +13,10 @@ from utils.logger import setup_logging
 
 load_dotenv()
 
+default_prompt = \
+    "You are a grammar tool. "\
+    "Fix grammar and punctuation in the user's text, maintaining markdown, line breaks, "\
+    "and HTML tags as is. Reply only with the corrected text."
 
 def main():
     setup_logging()
@@ -26,7 +31,8 @@ def main():
             logging.info("The content is empty. Exiting without processing.")
             sys.exit(0)
 
-        fixed_content = process_content(content, args.lines)
+        prompt = args.prompt or os.getenv("CORRECTOR_PROMPT", default_prompt)
+        fixed_content = process_content(content, args.lines, prompt)
 
         # Save the fixed content
         save_path = args.output or args.input_path

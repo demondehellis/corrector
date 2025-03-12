@@ -3,15 +3,6 @@ import logging
 from openai import OpenAI, OpenAIError
 
 
-def get_system_message():
-    return os.getenv(
-        'CORRECTOR_PROMPT',
-        "You are a grammar tool. "
-        "Fix grammar and punctuation in the user's text, maintaining markdown, line breaks, "
-        "and HTML tags as is. Reply only with the corrected text."
-    )
-
-
 def get_model():
     return os.getenv('CORRECTOR_MODEL', 'gpt-4o-mini')
 
@@ -23,16 +14,15 @@ def get_api_key():
     return api_key
 
 
-def fix_grammar(content):
-    """Use OpenAI's API to fix the provided content."""
+def apply_prompt(content, prompt):
+    """Apply the prompt to the content using the OpenAI API."""
     api_key = get_api_key()
     client = OpenAI(api_key=api_key)
-    system_message = get_system_message()
     model = get_model()
 
     try:
         messages = [
-            {"role": "system", "content": system_message},
+            {"role": "system", "content": prompt},
             {"role": "user", "content": content}
         ]
         response = client.chat.completions.create(model=model, messages=messages)

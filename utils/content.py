@@ -1,5 +1,5 @@
 import logging
-from utils.ai import fix_grammar
+from utils.ai import apply_prompt
 
 
 def parse_line_range(line_range):
@@ -33,7 +33,7 @@ def adjust_formatting(original, fixed):
     return fixed
 
 
-def process_content(content, line_range):
+def process_content(content, line_range, prompt):
     """Process content by selecting lines (if specified) and fixing grammar."""
     start, end = parse_line_range(line_range)
     selected_content = content
@@ -43,7 +43,7 @@ def process_content(content, line_range):
         selected_content = select_lines(content, start, end)
 
     logging.info("Content to fix:\n%s", selected_content)
-    fixed_content = fix_grammar(selected_content)
+    fixed_content = apply_prompt(selected_content, prompt)
     fixed_content = adjust_formatting(selected_content, fixed_content)
     logging.info("Fixed content:\n%s", fixed_content)
 

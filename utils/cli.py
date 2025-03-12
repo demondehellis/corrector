@@ -7,5 +7,6 @@ def parse_arguments():
     parser.add_argument('input_path', type=str, help="Path to the input file.")
     parser.add_argument('--lines', type=str, help="Range of lines to select in the format 'start:end'.", default=None)
     parser.add_argument('--output', type=str, help="Path to save the fixed output. Defaults to input file path.", default=None)
+    parser.add_argument('--prompt', type=str, help='Custom prompt. Defaults to fix grammar and punctuation.', default=None)
 
     return parser.parse_args()
